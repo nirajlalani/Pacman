@@ -2,6 +2,13 @@ import math
 import os
 
 
+def floor(value,size,offset=200):
+
+    return float(((value+offset) // size) * size - offset)
+
+
+
+
 def line(a,b,x,y):
 
     """
