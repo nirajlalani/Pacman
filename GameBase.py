@@ -37,7 +37,7 @@ def square(x,y,sideLength,colourFill):
     turtle.down()
     turtle.color(colourFill)
     turtle.begin_fill()
-    turtle.speed(1)
+    #turtle.speed(1)
 
     for _ in range(4):
         turtle.fd(sideLength)
@@ -169,12 +169,7 @@ class vector():
         adding the parameters of two vectors
         """
 
-        if self._hash != None:
-            raise ValueError
-        else:
-            self.x += other.x
-            self.y += other.y
-        return self
+        self.__iadd__(other)
 
 
     def rotate(self,angle):
@@ -188,3 +183,62 @@ class vector():
             y = self.y
             self.x = x * cosine - y * sine
             self.y = y * cosine - x * sine
+
+    def __iadd__(self, other):
+        if self._hash is not None:
+            raise ValueError('cannot add vector after hashing')
+        elif isinstance(other, vector):
+            self.x += other.x
+            self.y += other.y
+        else:
+            self.x += other
+            self.y += other
+        return self
+
+
+    def __add__(self, other):
+        copy = self.copy()
+        return copy.__iadd__(other)
+
+    __radd__ = __add__
+
+
+    def __isub__(self, other):
+        
+        if self._hash is not None:
+            raise ValueError('cannot subtract vector after hashing')
+        elif isinstance(other, vector):
+            self.x -= other.x
+            self.y -= other.y
+        else:
+            self.x -= other
+            self.y -= other
+        return self
+
+    def __sub__(self, other):
+        
+        copy = self.copy()
+        return copy.__isub__(other)
+
+
+    def __itruediv__(self, other):
+        
+        if self._hash is not None:
+            raise ValueError('cannot divide vector after hashing')
+        elif isinstance(other, vector):
+            self.x /= other.x
+            self.y /= other.y
+        else:
+            self.x /= other
+            self.y /= other
+        return self
+
+    def __truediv__(self, other):
+        
+        copy = self.copy()
+        return copy.__itruediv__(other)
+
+
+    def __abs__(self):
+        
+        return (self.x ** 2 + self.y ** 2) ** 0.5
