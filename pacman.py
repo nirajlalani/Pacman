@@ -1,15 +1,15 @@
 from random import *
 from turtle import *
-from GameBase import *
+from base import *
 
 path = Turtle(visible=True)
 
 aim = vector(5,0)
 pacman = vector(-20, -120)
-ghosts = [ [vector(-180,160), vector(3,0)],
-           [vector(160,160), vector(0,-3)],
-           [vector(160,-180),vector(-3,0)],
-           [vector(-180,-180),vector(0,3)]]
+ghosts = [ [vector(-180,160), vector(5,0)],
+           [vector(160,160), vector(0,-5)],
+           [vector(160,-180),vector(-5,0)],
+           [vector(-180,-180),vector(0,5)]]
 
 tiles = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
     0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
@@ -79,17 +79,19 @@ def move():
     up()
     goto(pacman.x + 10, pacman.y +10)
     dot(20,"yellow")
-    ht()
+    #ht()
 
     for point,course in ghosts:
         if valid(point + course):
             point.move(course)
         else:
-            options = [vector(4,0),
-                       vector(0,4),
-                       vector(0,-4),
-                       vector(-4,0)]
+            options = [
 
+                vector(5, 0),
+                vector(-5, 0),
+                vector(0, 5),
+                vector(0,-5),
+            ]
             plan = choice(options)
             course.x = plan.x
             course.y = plan.y
@@ -137,10 +139,10 @@ ht()
 tracer(False)
 
 listen()
-onkey(lambda: change(5,0),"Right")
-onkey(lambda: change(-5,0),"Left")
-onkey(lambda: change(0,5),"Up")
-onkey(lambda: change(0,-5),"Down")
+onkey(lambda: change(4,0),"Right")
+onkey(lambda: change(-4,0),"Left")
+onkey(lambda: change(0,4),"Up")
+onkey(lambda: change(0,-4),"Down")
 
 world()
 move()
